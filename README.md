@@ -22,7 +22,7 @@ Because the output is an AXI stream, it cannot necessarily be sent out continuou
 
 In some AXI-S designs, the data can flow through without any delay. That's not possible in this entity. This timing diagram illustrates why:
 
-![Timing Diagram 0](COBS_dec_0.svg)
+![Timing Diagram 0](images/COBS_dec_0.svg)
 
 Here we see an encoded sequence starting with a count of 3 and two non-zero data bytes, labeled 'a' and 'b'. In COBS encoding, this usually represents a three-byte sequence, consisting of the values of 'a' and 'b' followed by a zero byte. However, if this encoded sequence occurs at the end of the frame, it represents a two-byte sequence, with no trailing zero byte added. The value of the byte marked with a question mark determines which. If that byte is 0, it is a frame separator and the sequence is only two bytes long. If that byte is any other value, it is not a frame separator, and the sequence is three bytes long.
 
@@ -46,7 +46,7 @@ For now, let's ignore the handshaking requirements and assume that `s_tvalid` an
 
 The timing diagram below shows an example of this case. We see the entirety of one short frame, and the immediate beginning of a second frame. The first frame contains 13 bytes, as shown on the line marked `uncoded_data`. The second frame contains 27 bytes or more, and the beginning of this frame is shown on the line marked `next_uncoded`.
 
-![Timing Diagram 1](COBS_dec_1.svg)
+![Timing Diagram 1](images/COBS_dec_1.svg)
 
 The signal `s_tdata` shows the encoded data stream at the input to the entity. With no handshaking, these bytes arrive a full speed, one per clock cycle. The white 0 bytes are the frame separators. The yellow bytes are the sequence length bytes. The orange bytes are the non-zero data bytes within each sequence.
 
@@ -112,7 +112,7 @@ We will continue to ignore the handshaking requirements and assume that `s_tvali
 
 The timing diagram below shows a first frame consisting of 254 data bytes, none of which are 0. Some of the bytes in the middle of this frame are omitted to save space in the diagram. The last bytes in the frame are shown as v, w, x, y, z. The diagram also shows the beginning of the next frame, which starts with a three-byte sequence followed by a four-byte sequence, which falls off the right edge of the diagram.
 
-![Timing Diagram 2](COBS_dec_2.svg)
+![Timing Diagram 2](images/COBS_dec_2.svg)
 
 This is very much like the case shown in the first diagram, except that the 254-byte sequence does not include a 0 at the end. All 254 bytes are sent literally in the input data. The pseudo-length 255 is used to indicate this special case, per the COBS protocol.
 
@@ -126,7 +126,7 @@ The timing diagram below shows a first frame consisting of 257 data bytes, none 
 
 The diagram also shows the beginning of the next frame, which starts with a four-byte sequence, which falls off the right edge of the diagram.
 
-![Timing Diagram 3](COBS_dec_3.svg)
+![Timing Diagram 3](images/COBS_dec_3.svg)
 
 Because the first sequence does not include a zero at the end, the decoder output must skip a clock cycle to stay aligned two cycles behind the input. This is no problem: we just drop m_tvalid for that clock cycle, which causes the data consumer to wait. It doesn't matter what we present on `m_tdata` during that cycle.
 
@@ -150,7 +150,7 @@ The input data consists of two frames. The first frame has eight bytes, coded as
 
 We have shown the data source inserting delays after the frame separator 0 byte, after the first sequence length, after the first data byte of each sequence, and after the last non-zero byte of the second sequence.
 
-![Timing Diagram 4](COBS_dec_4.svg)
+![Timing Diagram 4](images/COBS_dec_4.svg)
 
 The rising edges of `clk` that occur with `s_tvalid` low need to be ignored. This is shown with skipped cycles on the pseudo-clock labeled `ctr_load`.
 
@@ -194,7 +194,7 @@ If we see a frame separator arrive during the data part of a sequence, something
 
 The timing diagram below shows both cases. At the left, we see the end of a frame, followed by multiple frame separators. Then in the middle of the next frame, we see a frame separator appearing where we expected data bytes. We also keep the previous pattern of `s_tvalid` just to spice things up a bit.
 
-![Timing Diagram 5](COBS_dec_5.svg)
+![Timing Diagram 5](images/COBS_dec_5.svg)
 
 At the left, we see the last sequence of a frame, consisting of the single byte z. We know it's a single byte rather than a byte followed by a zero, because the next byte (not counting the bytes with `s_tvalid` low) is a frame separator. Our existing rule for `m_tvalid` doesn't handle this case????
 
@@ -218,7 +218,7 @@ It will turn out that just freezing everything works correctly for everything el
 
 The timing diagram below shows the absolute simplest case. We're in the middle of a run of non-zero bytes somewhere inside a sequence inside a frame. `s_tvalid` is always high. `m_tready` will go low once for four cycles. After things settle down from that delay, `m_tready` will go low again for a single cycle. Then after things settle down again, `m_tready` will go low, high, low for one cycle each.
 
-![Timing Diagram 6](COBS_dec_6.svg)
+![Timing Diagram 6](images/COBS_dec_6.svg)
 
     s_tready = m_tready
 
