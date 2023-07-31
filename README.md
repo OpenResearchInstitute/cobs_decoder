@@ -1,6 +1,6 @@
-# cobs_decoder
+# COBS Decoder in VHDL
 
-## Consistent Overhead Byte Stuffing Decoder
+## Consistent Overhead Byte Stuffing
 
 ### Design Discussion
 
