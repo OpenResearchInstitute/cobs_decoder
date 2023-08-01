@@ -1,7 +1,3 @@
-# COBS Decoder Entity Design Docs
-
-[COBS_dec-Entity-Design.md](COBS_dec-Entity-Design.md) is a low-level design document for the COBS decoder, featuring lots of timing diagrams.
-
 ## Timing Diagram Tool
 The timing diagrams are drawn using [WaveDrom](https://wavedrom.com), a tool that converts a simple textual description into timing diagrams. The source files are JSON.
 
