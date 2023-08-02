@@ -1,0 +1,95 @@
+{signal: [
+  {name: 'clk',
+   wave: 'p.....................'},
+  {name: 'uncoded_data',
+   wave: '20.....2x20...222222',
+   data: 'z a b p q 0 r s ...',
+   phase: -1.9
+  },
+
+  ['Input',
+  {name: 's_tdata',
+   wave: '3x4x2x2234x42xx3443444',
+   data: '2 z 0 0 0 5 a b 0 3 p q 4 r s ...',
+   phase: 0.1
+  },
+   {name: 's_tvalid',
+    wave: '1010101...01.0.1......'
+   },
+   ],
+
+  {name: 'tdata_d',
+   wave: 'x3x4x2x2234x42xx344344',
+   data: '2 z 0 0 0 5 a b 0 3 p q 4 r ...',
+   phase: 0.1
+  },
+   
+   {name: 'tvalid_d',
+    wave: 'x1010101...01.0.1.....'
+   },
+   
+   {name: 'tvalid_dd',
+    wave: 'xx1010101...01.0.1....'
+   },
+   
+   {name: 'frame_sep',
+    wave: '0....101.0...10.......'
+   },
+   
+   {name: 'frame_sep_d',
+    wave: '0.....1...0...1..0....'
+   },
+
+   {name: 'counter_load',
+    wave: 'x10..10..10.....10.10.'
+   },
+
+   {name: '~ ctr_load',
+   wave: 'ppPlplPlp.Pplppl.Pp.Pp',
+  },
+  {name: 'count',
+   wave: 'xx3.5.5...35.55..35535',
+   data: '2 1 0 0 0 5 4 3 0 3 2 1 4  ...',
+   phase: 0.1
+  },
+
+   {name: 'counter_load_d',
+    wave: 'xx1.0.1.0.10.....10.10'
+   },
+
+
+   {name: 'pre_tvalid',
+    wave: '1.....0....1..0...1...'
+   },
+
+
+   ['Output',
+  {name: 'm_tdata',
+   wave: 'xxxx6.x.x..6.66..66666',
+   data: 'z a b 0 0 p q 0 ...',
+   phase: 0.1
+  },
+  {name: 'm_tlast',
+   wave: '0....10......10.......',
+   phase: 0.1
+  },
+  {name: 'm_tvalid',
+   wave: 'xxxx010....1010...1...',
+   phase: 0.1
+  },
+    ],
+  {name: 'consumed',
+   wave: 'x70....8x80...9999',
+   data: 'z a b p q 0 ...',
+   phase: -4
+  },
+],
+  head:{
+    text: ['tspan', {class: 'h2'}, 'COBS Decoder Implementation Timing 5'],
+    tick: 0
+  },
+  foot:{
+    text: ['tspan', {class: 'muted h5'},
+   'Assumes m_tready stays high                                                  2022-12-03 Paul Williamson and Michelle Thompson'],
+  },
+}
